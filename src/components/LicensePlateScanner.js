@@ -14,19 +14,21 @@ const LicensePlateScanner = ({ image }) => {
         setIsLoading(true);
         setError(null);
 
-        const apiUrl = 'https://api.platerecognizer.com/v1/plate-reader';
+        // Using a CORS proxy
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const apiUrl = `${proxyUrl}https://api.platerecognizer.com/v1/plate-reader`;
+
         const formData = new FormData();
         formData.append('upload', image);
         // Add other parameters as needed, e.g., regions, camera_id, etc.
 
         const response = await axios.post(apiUrl, formData, {
           headers: {
-            'Authorization': '2c0871e7e993b967a56fa1a1663bd56273379055', // Replace 'your-api-token' with your actual API token
+            'Authorization': '2c0871e7e993b967a56fa1a1663bd56273379055', // Replace with your actual API token
             'Content-Type': 'multipart/form-data',
           },
         });
 
-        // Assuming you want to display the first recognized license plate
         const plates = response.data.results;
         if (plates.length > 0) {
           setLicensePlate(plates[0].plate);
