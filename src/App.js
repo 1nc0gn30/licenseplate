@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Camera from './components/Camera';
+import LicensePlateScanner from './components/LicensePlateScanner';
+import TokenDisplay from './components/TokenDisplay';
+import ErrorComponent from './components/ErrorComponent';
 
 function App() {
+  const handleCapture = (imageSrc) => {
+    // Handle the captured image here
+    console.log(imageSrc);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Camera onCapture={handleCapture} />} />
+          <Route path="/scan" element={<LicensePlateScanner />} />
+          <Route path="/token" element={<TokenDisplay />} />
+          <Route path="/error" element={<ErrorComponent />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
+
 
 export default App;
